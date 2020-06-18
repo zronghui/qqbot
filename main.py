@@ -52,4 +52,4 @@ def handle_request(event):
     return {'approve': True}  # 同意所有加群、加好友请求
 
 
-bot.run(host='127.0.0.1', port=4991, debug=True)
+bot.run(host='0.0.0.0', port=4991, debug=True)
