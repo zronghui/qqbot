@@ -5,6 +5,7 @@ import pretty_errors
 from cqhttp import CQHttp
 from icecream import ic
 import schedule
+import time
 
 pretty_errors.activate()
 
@@ -20,3 +21,7 @@ def miguNotify():
 
 
 schedule.every(15).minutes.do(miguNotify)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)

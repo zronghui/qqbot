@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/zronghui/qqbot#readme",
   "devDependencies": {
-    "cz-conventional-changelog": "^3.2.0"
+    "cz-conventional-changelog": "^3.2.0",
+    "cz-customizable": "^6.2.0"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-conventional-changelog",
+      "path": "node_modules/cz-customizable"
     }
   }
 }
