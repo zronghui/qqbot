@@ -18,6 +18,7 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
 
 def miguNotify():
     message = '咪咕打卡'
+    print(redis_keywords.miguDays())
     if redis_keywords.miguPunched():
         bot.send(event={}, message=message, user_id='825503975')
 
