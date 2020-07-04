@@ -6,6 +6,7 @@ from cqhttp import CQHttp
 from icecream import ic
 import schedule
 import time
+import redis_keywords
 
 pretty_errors.activate()
 
@@ -17,7 +18,8 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
 
 def miguNotify():
     message = '咪咕打卡'
-    bot.send(event={}, message=message, user_id='825503975')
+    if redis_keywords.miguPunched():
+        bot.send(event={}, message=message, user_id='825503975')
 
 
 schedule.every(15).minutes.do(miguNotify)

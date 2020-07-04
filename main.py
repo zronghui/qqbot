@@ -5,6 +5,7 @@ import pretty_errors
 from cqhttp import CQHttp
 from icecream import ic
 
+
 import redis_keywords
 # import taobaoke
 
@@ -50,6 +51,13 @@ def handle_msg(event):
 @bot.on_request('group', 'friend')
 def handle_request(event):
     return {'approve': True}  # 同意所有加群、加好友请求
+
+
+@bot.on_message
+def handle_msg(event):
+    if event.sender == '825503975' and '已打卡' in event.message:
+        out_message = redis_keywords.miguPunchIn()
+        bot.send(event, message=out_message, user_id='825503975')
 
 
 bot.run(host='0.0.0.0', port=4991, debug=True)

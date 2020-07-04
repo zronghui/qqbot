@@ -3,6 +3,7 @@
 
 import pretty_errors
 import redis
+from datetime import datetime
 
 pretty_errors.activate()
 host = '127.0.0.1'
@@ -30,6 +31,23 @@ def rem_keyword(keyword: str) -> str:
     else:
         out_message = '删除\'' + keyword + '\'失败'
     return out_message
+
+
+def miguPunchIn():
+    today = datetime.today().strftime('%Y-%m-%d')
+    if r.sadd('migudays', today) == 1:
+        out_message = '打卡成功'
+    else:
+        out_message = '打卡失败'
+    return out_message
+
+
+def miguPunched():
+    today = datetime.today().strftime('%Y-%m-%d')
+    return r.sismember('migudays', today)
+    # if r.sismember('migudays', today):
+    #     return '今日已打卡'
+    # return '今日未打卡'
 
 
 if __name__ == '__main__':
