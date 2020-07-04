@@ -49,8 +49,10 @@ def miguPunched():
     #     return '今日已打卡'
     # return '今日未打卡'
 
+
 def miguDays():
     return r.smembers('migudays')
+
 
 if __name__ == '__main__':
     print(add_keyword('1 2'))
