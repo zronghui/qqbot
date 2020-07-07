@@ -18,6 +18,10 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
 
 @bot.on_message
 def handle_msg(event):
+    if event['user_id'] == 825503975 and '已打卡' in event['message']:
+        out_message = redis_keywords.miguPunchIn()
+        bot.send(event, message=out_message, user_id='825503975')
+
     message = event['message']
     ic(message, type(message))
     keywords = redis_keywords.get_keywords()
@@ -53,12 +57,12 @@ def handle_request(event):
     return {'approve': True}  # 同意所有加群、加好友请求
 
 
-@bot.on_message
-def miguPunchIn(event):
-    # ic(event['sender'], event['user_id'], event['message'])
-    if event['user_id'] == 825503975 and '已打卡' in event['message']:
-        out_message = redis_keywords.miguPunchIn()
-        bot.send(event, message=out_message, user_id='825503975')
+# @bot.on_message
+# def miguPunchIn(event):
+#     # ic(event['sender'], event['user_id'], event['message'])
+#     if event['user_id'] == 825503975 and '已打卡' in event['message']:
+#         out_message = redis_keywords.miguPunchIn()
+#         bot.send(event, message=out_message, user_id='825503975')
 
 
 bot.run(host='0.0.0.0', port=4991, debug=True)
