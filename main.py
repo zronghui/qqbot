@@ -54,7 +54,7 @@ def handle_request(event):
 
 
 @bot.on_message
-def handle_msg(event):
+def miguPunchIn(event):
     # ic(event['sender'], event['user_id'], event['message'])
     if event['user_id'] == 825503975 and '已打卡' in event['message']:
         out_message = redis_keywords.miguPunchIn()
