@@ -51,7 +51,7 @@ def miguPunched():
 
 
 def miguDays():
-    return r.smembers('migudays')
+    return str(r.scard('migudays'))
 
 
 if __name__ == '__main__':
