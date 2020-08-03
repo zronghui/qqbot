@@ -17,28 +17,21 @@ def get_keywords(key) -> list:
 
 def add_keyword(key, keyword: str) -> str:
     keyword = keyword.strip()
-    if r.sadd(key, keyword) == 1:
-        out_message = key + ' 插入\'' + keyword + '\'成功'
-    else:
-        out_message = key + ' 插入\'' + keyword + '\'失败'
+    out_message = f'{key} 插入\'{keyword}\'' +\
+        ('成功' if r.sadd(key, keyword) == 1 else '失败')
     return out_message
 
 
 def rem_keyword(key, keyword: str) -> str:
     keyword = keyword.strip()
-    if r.srem(key, keyword) == 1:
-        out_message = key + ' 删除\'' + keyword + '\'成功'
-    else:
-        out_message = key + ' 删除\'' + keyword + '\'失败'
+    out_message = f'{key} 删除\'{keyword}\'' +\
+        ('成功' if r.srem(key, keyword) == 1 else '失败')
     return out_message
 
 
 def miguPunchIn():
     today = datetime.today().strftime('%Y-%m-%d')
-    if r.sadd('migudays', today) == 1:
-        out_message = '打卡成功'
-    else:
-        out_message = '打卡失败'
+    out_message = '打卡成功'if r.sadd('migudays', today) == 1 else '打卡失败'
     return out_message
 
 

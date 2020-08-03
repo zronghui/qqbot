@@ -16,6 +16,7 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
              )
 
 
+# todo: 多个提醒，不同的 message、提醒间隔; 不同提醒的打卡日期放redis 同一个 key 里
 def miguNotify():
     message = '咪咕打卡'
     print(redis_keywords.miguDays())
