@@ -17,6 +17,15 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
 
 allowlist_key = 'shop_allowlist'
 denylist_key = 'shop_denylist'
+help_str = '''
+1. 获得所有白名单 cmd1
+2. 添加白名单 cmd2 keyword
+3. 删除白名单 cmd3 keyword
+4. 获得所有黑名单 cmd4
+5. 添加黑名单 cmd5 keyword
+6. 删除黑名单 cmd6 keyword
+0. 获得帮助 ?
+'''
 
 
 @bot.on_message
@@ -32,14 +41,7 @@ def handle_msg(event):
     group_id = None
 
     if message in ['?', '？']:
-        out_message = '''
-        1. 获得所有白名单 cmd1
-        2. 添加白名单 cmd2 keyword
-        3. 删除白名单 cmd3 keyword
-        4. 获得所有黑名单 cmd4
-        5. 添加黑名单 cmd5 keyword
-        6. 删除黑名单 cmd6 keyword
-        0. 获得帮助 ?'''
+        out_message = help_str
     elif message == 'cmd1':
         out_message = allowlist_key + ':\n' + ' '.join(allowlist)
     elif message.startswith('cmd2 '):
