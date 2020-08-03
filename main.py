@@ -15,6 +15,9 @@ bot = CQHttp(api_root='http://127.0.0.1:5700/',
              # secret='your-secret'
              )
 
+allowlist_key = 'shop_allowlist'
+denylist_key = 'shop_denylist'
+
 
 @bot.on_message
 def handle_msg(event):
@@ -24,21 +27,42 @@ def handle_msg(event):
 
     message = event['message']
     ic(message, type(message))
-    keywords = redis_keywords.get_keywords()
+    allowlist = redis_keywords.get_keywords(key=allowlist_key)
+    denylist = redis_keywords.get_keywords(key=denylist_key)
     group_id = None
 
     if message in ['?', '？']:
-        out_message = '1. 获得所有关键词 cmd1\n2. 添加关键词 cmd2 keyword\n3. 删除关键词 cmd3 keyword\n4. 获得帮助 ?'
+        out_message = '''
+        1. 获得所有白名单 cmd1
+        2. 添加白名单 cmd2 keyword
+        3. 删除白名单 cmd3 keyword
+        4. 获得所有黑名单 cmd4
+        5. 添加黑名单 cmd5 keyword
+        6. 删除黑名单 cmd6 keyword
+        0. 获得帮助 ?'''
     elif message == 'cmd1':
-        out_message = ' '.join(keywords)
+        out_message = allowlist_key + ':\n' + ' '.join(allowlist)
     elif message.startswith('cmd2 '):
-        out_message = redis_keywords.add_keyword(message[4:])
+        out_message = redis_keywords.add_keyword(key=allowlist_key,
+                                                 keyword=message[4:])
     elif message.startswith('cmd3 '):
-        out_message = redis_keywords.rem_keyword(message[4:])
+        out_message = redis_keywords.rem_keyword(key=allowlist_key,
+                                                 keyword=message[4:])
+    elif message == 'cmd4':
+        out_message = denylist_key + ':\n' + ' '.join(denylist)
+    elif message.startswith('cmd5 '):
+        out_message = redis_keywords.add_keyword(key=denylist_key,
+                                                 keyword=message[4:])
+    elif message.startswith('cmd6 '):
+        out_message = redis_keywords.rem_keyword(key=denylist_key,
+                                                 keyword=message[4:])
     else:
-        for keyword in keywords:
-            if keyword in message:
-                out_message = f'关键词:{keyword}\n{message}'
+        for deny in denylist:
+            if deny in message:
+                return
+        for allow in allowlist:
+            if allow in message:
+                out_message = f'关键词:{allow}\n{message}'
                 # out_message = taobaoke.convert(out_message)
                 group_id = '1103014124'
                 break

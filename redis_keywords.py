@@ -11,25 +11,25 @@ port = 6379
 r = redis.StrictRedis(host=host, port=port)
 
 
-def get_keywords() -> list:
-    return [i.decode("utf-8") for i in r.smembers('keywords')]
+def get_keywords(key) -> list:
+    return [i.decode("utf-8") for i in r.smembers(key)]
 
 
-def add_keyword(keyword: str) -> str:
+def add_keyword(key, keyword: str) -> str:
     keyword = keyword.strip()
-    if r.sadd('keywords', keyword) == 1:
-        out_message = '插入\'' + keyword + '\'成功'
+    if r.sadd(key, keyword) == 1:
+        out_message = key + ' 插入\'' + keyword + '\'成功'
     else:
-        out_message = '插入\'' + keyword + '\'失败'
+        out_message = key + ' 插入\'' + keyword + '\'失败'
     return out_message
 
 
-def rem_keyword(keyword: str) -> str:
+def rem_keyword(key, keyword: str) -> str:
     keyword = keyword.strip()
-    if r.srem('keywords', keyword) == 1:
-        out_message = '删除\'' + keyword + '\'成功'
+    if r.srem(key, keyword) == 1:
+        out_message = key + ' 删除\'' + keyword + '\'成功'
     else:
-        out_message = '删除\'' + keyword + '\'失败'
+        out_message = key + ' 删除\'' + keyword + '\'失败'
     return out_message
 
 
